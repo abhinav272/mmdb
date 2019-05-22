@@ -34,7 +34,7 @@ interface ApiInterface {
                     val originalHttpUrl = original.url()
 
                     val url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("api_key", BuildConfig.API_KEY)
+//                        .addQueryParameter("api_key", BuildConfig.API_KEY)
 //                                .addQueryParameter("api_key", "io")
                         .build()
 
@@ -50,4 +50,5 @@ interface ApiInterface {
                 .writeTimeout(30, TimeUnit.SECONDS)
             return httpClient.build()
         }
+    }
 }
