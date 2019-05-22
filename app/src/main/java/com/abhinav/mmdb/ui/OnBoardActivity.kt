@@ -3,6 +3,7 @@ package com.abhinav.mmdb.ui
 import android.content.Intent
 import android.os.Bundle
 import com.abhinav.mmdb.R
+import com.abhinav.mmdb.ui.home.HomeActivity
 import kotlinx.coroutines.*
 
 class OnBoardActivity : BaseActivity() {
