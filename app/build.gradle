@@ -15,6 +15,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField('String', "tmdb_api_key", ApiKey)
+        buildConfigField('String', "IMAGE_BASE_URL", '"https://image.tmdb.org/t/p/"')
+        buildConfigField('String', "BASE_URL", '"https://api.themoviedb.org/3/"')
     }
     buildTypes {
         release {
