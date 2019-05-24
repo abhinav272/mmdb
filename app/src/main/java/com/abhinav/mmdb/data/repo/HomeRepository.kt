@@ -16,7 +16,7 @@ class HomeRepository : BaseRepository() {
 
     suspend fun getTrending(): Result<TrendingResponse> {
         return safeApiCall(
-            { ApiInterface.getAPIService().getTrending(mediaType = "all", timeWindow = "week").await() },
+            { ApiInterface.getAPIService().getTrending(mediaType = "all", timeWindow = "week", pageNo = 1).await() },
             "Unable to fetch trending items"
         )
     }

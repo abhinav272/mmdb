@@ -63,5 +63,7 @@ interface ApiInterface {
     fun fetchConfigurations() : Deferred<Response<Configurations>>
 
     @GET("trending/{media_type}/{time_window}")
-    fun getTrending(@Path("media_type") mediaType: String, @Path("time_window") timeWindow: String): Deferred<Response<TrendingResponse>>
+    fun getTrending(@Path("media_type") mediaType: String,
+                    @Path("time_window") timeWindow: String,
+                    @Path("page") pageNo: Int): Deferred<Response<TrendingResponse>>
 }
