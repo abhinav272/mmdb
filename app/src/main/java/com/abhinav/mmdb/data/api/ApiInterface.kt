@@ -1,8 +1,8 @@
-package com.abhinav.mmdb.data
+package com.abhinav.mmdb.data.api
 
 import com.abhinav.mmdb.BuildConfig
 import com.abhinav.mmdb.BuildConfig.BASE_URL
-import com.abhinav.mmdb.data.api.Configurations
+import com.abhinav.mmdb.data.model.Configurations
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
@@ -56,6 +56,6 @@ interface ApiInterface {
         }
     }
 
-    @GET("/configuration")
+    @GET("configuration")
     fun fetchConfigurations() : Deferred<Response<Configurations>>
 }
