@@ -2,7 +2,6 @@ package com.abhinav.mmdb.ui.home
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.abhinav.mmdb.data.cache.CacheManager
 import com.abhinav.mmdb.data.model.Configurations
 import com.abhinav.mmdb.data.model.Result
@@ -20,7 +19,7 @@ class HomeViewModel : BaseViewModel() {
     private val TAG = "HomeViewModel"
 
     private val repo = HomeRepository()
-    private var trendingLiveData= MutableLiveData<List<TrendingItem>>()
+    var trendingLiveData = MutableLiveData<List<TrendingItem>>()
 
     /**
      * This is the job for all coroutines started by this ViewModel.
@@ -61,13 +60,23 @@ class HomeViewModel : BaseViewModel() {
         }
     }
 
-    fun fetchTrendingItems(){
+    fun fetchTrendingItems() {
         ioScope.launch {
             val trendingResult = repo.getTrending()
 
-            when(trendingResult){
+            when (trendingResult) {
                 is Result.Success -> {
+                    trendingLiveData.postValue(trendingResult.data.results)
+                }
 
+                is Result.Failure -> {
+                    failureLiveData.postValue(Event(trendingResult))
+                    Log.e(TAG, trendingResult.message)
+                }
+
+                else -> {
+                    trendingResult as Result.Error
+                    trendingResult.exception.message?.let { Log.e(TAG, it, trendingResult.exception) }
                 }
             }
         }

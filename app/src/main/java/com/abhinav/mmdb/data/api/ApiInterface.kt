@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 interface ApiInterface {
@@ -41,8 +42,8 @@ interface ApiInterface {
                     val originalHttpUrl = original.url()
 
                     val url = originalHttpUrl.newBuilder()
-//                        .addQueryParameter("api_key", BuildConfig.tmdb_api_key)
-                                .addQueryParameter("api_key", "io")
+                        .addQueryParameter("api_key", BuildConfig.tmdb_api_key)
+//                                .addQueryParameter("api_key", "io")
                         .build()
 
                     // Request customization: add request headers
@@ -65,5 +66,5 @@ interface ApiInterface {
     @GET("trending/{media_type}/{time_window}")
     fun getTrending(@Path("media_type") mediaType: String,
                     @Path("time_window") timeWindow: String,
-                    @Path("page") pageNo: Int): Deferred<Response<TrendingResponse>>
+                    @Query("page") pageNo: Int): Deferred<Response<TrendingResponse>>
 }

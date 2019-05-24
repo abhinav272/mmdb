@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.abhinav.mmdb.R
 import com.abhinav.mmdb.ui.BaseFragment
 
@@ -22,7 +23,8 @@ class HomeFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.trendingLiveData.observe(this, Observer { it.forEach { it1 -> it1.name.let { s -> println(s) } } })
+        viewModel.fetchTrendingItems()
     }
 
 }

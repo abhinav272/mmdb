@@ -2,7 +2,6 @@ package com.abhinav.mmdb.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
-import com.abhinav.mmdb.R
 import com.abhinav.mmdb.data.model.Result
 import com.abhinav.mmdb.showToastMsg
 import com.abhinav.mmdb.utils.Event
