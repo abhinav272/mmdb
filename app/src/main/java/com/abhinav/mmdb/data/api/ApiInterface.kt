@@ -38,8 +38,8 @@ interface ApiInterface {
                     val originalHttpUrl = original.url()
 
                     val url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("api_key", BuildConfig.tmdb_api_key)
-//                                .addQueryParameter("api_key", "io")
+//                        .addQueryParameter("api_key", BuildConfig.tmdb_api_key)
+                                .addQueryParameter("api_key", "io")
                         .build()
 
                     // Request customization: add request headers
