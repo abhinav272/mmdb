@@ -3,6 +3,7 @@ package com.abhinav.mmdb.data.api
 import com.abhinav.mmdb.BuildConfig
 import com.abhinav.mmdb.BuildConfig.BASE_URL
 import com.abhinav.mmdb.data.model.Configurations
+import com.abhinav.mmdb.data.model.TrendingResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
@@ -10,7 +11,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Field
 import retrofit2.http.GET
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 interface ApiInterface {
@@ -58,4 +61,7 @@ interface ApiInterface {
 
     @GET("configuration")
     fun fetchConfigurations() : Deferred<Response<Configurations>>
+
+    @GET("trending/{media_type}/{time_window}")
+    fun getTrending(@Path("media_type") mediaType: String, @Path("time_window") timeWindow: String): Deferred<Response<TrendingResponse>>
 }
