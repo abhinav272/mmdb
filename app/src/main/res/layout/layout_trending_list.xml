@@ -16,6 +16,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_trending_items"
         android:layout_marginTop="10dp"
+        android:layoutAnimation="@anim/layout_animation_left_to_right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
