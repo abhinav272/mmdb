@@ -2,6 +2,7 @@ package com.abhinav.mmdb.data.repo
 
 import com.abhinav.mmdb.data.api.ApiInterface
 import com.abhinav.mmdb.data.model.Configurations
+import com.abhinav.mmdb.data.model.GenreResponse
 import com.abhinav.mmdb.data.model.Result
 import com.abhinav.mmdb.data.model.TrendingResponse
 
@@ -12,6 +13,11 @@ class HomeRepository : BaseRepository() {
             { ApiInterface.getAPIService().fetchConfigurations().await() },
             "Unable to fetch basic configurations"
         )
+    }
+
+    suspend fun getGenreMasterData(): Result<GenreResponse> {
+        return safeApiCall({ ApiInterface.getAPIService().getGenreMasterData().await() },
+            "Unable to fetch Genres")
     }
 
     suspend fun getTrending(): Result<TrendingResponse> {

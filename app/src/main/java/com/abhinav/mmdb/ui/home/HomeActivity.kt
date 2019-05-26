@@ -29,7 +29,6 @@ class HomeActivity : BaseActivity() {
     private fun showHomeFragment() {
         val fragment = HomeFragment.getInstance()
         supportFragmentManager.commit {
-            addToBackStack(fragment::class.java.simpleName)
             add(frame_container.id, fragment, fragment::class.java.simpleName)
         }
     }

@@ -163,7 +163,7 @@ data class TrendingResponse(
           "id": 337339,
           "original_language": "en",
           "original_title": "The Fate of the Furious",
-          "overview": "When a mysterious woman seduces Dom into the world of crime and a betrayal of those closest to him, the crew face trials that will test them as never before.",
+          "overview": "When a mysterious woman seduces Dom into the world of crime and a betrayal of those closest to him, the crew face trials that will left_to_right them as never before.",
           "poster_path": "/dImWM7GJqryWJO9LHa3XQ8DD5NH.jpg",
           "release_date": "2017-04-12",
           "title": "The Fate of the Furious",
