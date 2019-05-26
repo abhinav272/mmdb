@@ -3,6 +3,7 @@ package com.abhinav.mmdb.data.api
 import com.abhinav.mmdb.BuildConfig
 import com.abhinav.mmdb.BuildConfig.BASE_URL
 import com.abhinav.mmdb.data.model.Configurations
+import com.abhinav.mmdb.data.model.GenreResponse
 import com.abhinav.mmdb.data.model.TrendingResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -67,4 +68,7 @@ interface ApiInterface {
     fun getTrending(@Path("media_type") mediaType: String,
                     @Path("time_window") timeWindow: String,
                     @Query("page") pageNo: Int): Deferred<Response<TrendingResponse>>
+
+    @GET("genre/movie/list")
+    fun getGenreMasterData(): Deferred<Response<GenreResponse>>
 }

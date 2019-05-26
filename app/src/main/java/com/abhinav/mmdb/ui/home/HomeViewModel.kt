@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.abhinav.mmdb.data.cache.CacheManager
 import com.abhinav.mmdb.data.model.Configurations
+import com.abhinav.mmdb.data.model.GenreResponse
 import com.abhinav.mmdb.data.model.Result
 import com.abhinav.mmdb.data.model.TrendingItem
 import com.abhinav.mmdb.data.repo.HomeRepository
@@ -55,6 +56,22 @@ class HomeViewModel : BaseViewModel() {
                 else -> {
                     fetchConfigurations as Result.Error
                     fetchConfigurations.exception.message?.let { Log.e(TAG, it, fetchConfigurations.exception) }
+                }
+            }
+        }
+
+        ioScope.launch {
+            when(val genreResult = repo.getGenreMasterData()){
+                is Result.Success<GenreResponse> ->{
+                    CacheManager.genreMap = genreResult.data.genres?.associateBy({it.id}, {it.name})
+                }
+                is Result.Failure -> {
+                    failureLiveData.postValue(Event(genreResult))
+                    Log.e(TAG, genreResult.message)
+                }
+                else -> {
+                    genreResult as Result.Error
+                    genreResult.exception.message?.let { Log.e(TAG, it, genreResult.exception) }
                 }
             }
         }
