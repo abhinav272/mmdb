@@ -3,10 +3,7 @@ package com.abhinav.mmdb.ui.home
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.abhinav.mmdb.data.cache.CacheManager
-import com.abhinav.mmdb.data.model.Configurations
-import com.abhinav.mmdb.data.model.GenreResponse
-import com.abhinav.mmdb.data.model.Result
-import com.abhinav.mmdb.data.model.TrendingItem
+import com.abhinav.mmdb.data.model.*
 import com.abhinav.mmdb.data.repo.HomeRepository
 import com.abhinav.mmdb.ui.BaseViewModel
 import com.abhinav.mmdb.utils.Event
@@ -21,6 +18,7 @@ class HomeViewModel : BaseViewModel() {
 
     private val repo = HomeRepository()
     var trendingLiveData = MutableLiveData<List<TrendingItem>>()
+    var nowPlayingLiveData = MutableLiveData<List<NowPlaying>>()
 
     /**
      * This is the job for all coroutines started by this ViewModel.
@@ -61,9 +59,9 @@ class HomeViewModel : BaseViewModel() {
         }
 
         ioScope.launch {
-            when(val genreResult = repo.getGenreMasterData()){
-                is Result.Success<GenreResponse> ->{
-                    CacheManager.genreMap = genreResult.data.genres?.associateBy({it.id}, {it.name})
+            when (val genreResult = repo.getGenreMasterData()) {
+                is Result.Success<GenreResponse> -> {
+                    CacheManager.genreMap = genreResult.data.genres?.associateBy({ it.id }, { it.name })
                 }
                 is Result.Failure -> {
                     failureLiveData.postValue(Event(genreResult))
@@ -79,9 +77,7 @@ class HomeViewModel : BaseViewModel() {
 
     fun fetchTrendingItems() {
         ioScope.launch {
-            val trendingResult = repo.getTrending()
-
-            when (trendingResult) {
+            when (val trendingResult = repo.getTrending()) {
                 is Result.Success -> {
                     trendingLiveData.postValue(trendingResult.data.results)
                 }
@@ -94,6 +90,26 @@ class HomeViewModel : BaseViewModel() {
                 else -> {
                     trendingResult as Result.Error
                     trendingResult.exception.message?.let { Log.e(TAG, it, trendingResult.exception) }
+                }
+            }
+        }
+    }
+
+    fun fetchNowPlaying() {
+        ioScope.launch {
+            when (val nowPlayingResult = repo.getNowPlayingMovies()) {
+                is Result.Success -> {
+                    nowPlayingLiveData.postValue(nowPlayingResult.data.results)
+                }
+
+                is Result.Failure -> {
+                    failureLiveData.postValue(Event(nowPlayingResult))
+                    Log.e(TAG, nowPlayingResult.message)
+                }
+
+                else -> {
+                    nowPlayingResult as Result.Error
+                    nowPlayingResult.exception.message?.let { Log.e(TAG, it, nowPlayingResult.exception) }
                 }
             }
         }

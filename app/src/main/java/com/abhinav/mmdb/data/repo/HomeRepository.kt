@@ -1,10 +1,7 @@
 package com.abhinav.mmdb.data.repo
 
 import com.abhinav.mmdb.data.api.ApiInterface
-import com.abhinav.mmdb.data.model.Configurations
-import com.abhinav.mmdb.data.model.GenreResponse
-import com.abhinav.mmdb.data.model.Result
-import com.abhinav.mmdb.data.model.TrendingResponse
+import com.abhinav.mmdb.data.model.*
 
 class HomeRepository : BaseRepository() {
 
@@ -16,14 +13,23 @@ class HomeRepository : BaseRepository() {
     }
 
     suspend fun getGenreMasterData(): Result<GenreResponse> {
-        return safeApiCall({ ApiInterface.getAPIService().getGenreMasterData().await() },
-            "Unable to fetch Genres")
+        return safeApiCall(
+            { ApiInterface.getAPIService().getGenreMasterData().await() },
+            "Unable to fetch Genres"
+        )
     }
 
     suspend fun getTrending(): Result<TrendingResponse> {
         return safeApiCall(
             { ApiInterface.getAPIService().getTrending(mediaType = "all", timeWindow = "week", pageNo = 1).await() },
             "Unable to fetch trending items"
+        )
+    }
+
+    suspend fun getNowPlayingMovies(): Result<NowPlayingResponse> {
+        return safeApiCall(
+            {ApiInterface.getAPIService().getNowPlayingMovies(pageNo = 1, language = "en").await()},
+            "Unable to fetch Now Playing movies"
         )
     }
 }

@@ -3,6 +3,7 @@ package com.abhinav.mmdb.ui.adapters
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.abhinav.mmdb.R
+import com.abhinav.mmdb.data.model.NowPlaying
 import com.abhinav.mmdb.data.model.TrendingItem
 import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.adapters.viewholders.HomeItemsViewHolder
@@ -15,8 +16,8 @@ class HomeItemsAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val UPCOMING = 103
     val SUGGESTION = 104
 
-    val trendingItems = ArrayList<TrendingItem>()
-    val nowPlayingItems = ArrayList<TrendingItem>()
+    private val trendingItems = ArrayList<TrendingItem>()
+    private val nowPlayingItems = ArrayList<NowPlaying>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
@@ -49,7 +50,7 @@ class HomeItemsAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    private fun getNowPlayingItem(position: Int): TrendingItem {
+    private fun getNowPlayingItem(position: Int): NowPlaying {
         return nowPlayingItems[position-1]
     }
 
@@ -59,9 +60,20 @@ class HomeItemsAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun onTrendingItemsLoaded(trendingItems: List<TrendingItem>?) {
-        notifyDataSetChanged()
         this.trendingItems.clear()
         trendingItems?.let { this.trendingItems.addAll(it) }
+
+    }
+
+    fun onNowPlayingItemsLoaded(nowPlayingList: List<NowPlaying>?) {
+        nowPlayingList?.let {
+            this.nowPlayingItems.apply {
+                clear()
+                addAll(nowPlayingList)
+            }
+//            notifyItemRangeInserted(1, nowPlayingList.size)
+            notifyDataSetChanged()
+        }
 
     }
 }

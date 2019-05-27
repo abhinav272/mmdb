@@ -12,6 +12,7 @@ import com.abhinav.mmdb.R
 import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.BaseFragment
 import com.abhinav.mmdb.ui.adapters.HomeItemsAdapter
+import com.abhinav.mmdb.utils.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment() {
@@ -41,7 +42,13 @@ class HomeFragment : BaseFragment() {
         viewModel.trendingLiveData.observe(this, Observer {
             homeItemsAdapter.onTrendingItemsLoaded(it)
         })
+
+        viewModel.nowPlayingLiveData.observe(this, Observer {
+            homeItemsAdapter.onNowPlayingItemsLoaded(it)
+        })
+
         viewModel.fetchTrendingItems()
+        viewModel.fetchNowPlaying()
     }
 
     private fun bindTrendingAdapter() {
@@ -58,6 +65,7 @@ class HomeFragment : BaseFragment() {
         rv_items.apply {
             adapter = homeItemsAdapter
             layoutManager = gridLayoutManager
+            addItemDecoration(ItemOffsetDecoration(20))
         }
     }
 

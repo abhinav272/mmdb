@@ -4,6 +4,7 @@ import com.abhinav.mmdb.BuildConfig
 import com.abhinav.mmdb.BuildConfig.BASE_URL
 import com.abhinav.mmdb.data.model.Configurations
 import com.abhinav.mmdb.data.model.GenreResponse
+import com.abhinav.mmdb.data.model.NowPlayingResponse
 import com.abhinav.mmdb.data.model.TrendingResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -12,7 +13,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -62,13 +62,22 @@ interface ApiInterface {
     }
 
     @GET("configuration")
-    fun fetchConfigurations() : Deferred<Response<Configurations>>
+    fun fetchConfigurations(): Deferred<Response<Configurations>>
 
     @GET("trending/{media_type}/{time_window}")
-    fun getTrending(@Path("media_type") mediaType: String,
-                    @Path("time_window") timeWindow: String,
-                    @Query("page") pageNo: Int): Deferred<Response<TrendingResponse>>
+    fun getTrending(
+        @Path("media_type") mediaType: String,
+        @Path("time_window") timeWindow: String,
+        @Query("page") pageNo: Int
+    ): Deferred<Response<TrendingResponse>>
 
     @GET("genre/movie/list")
     fun getGenreMasterData(): Deferred<Response<GenreResponse>>
+
+    @GET("movie/now_playing")
+    fun getNowPlayingMovies(
+        @Query("page") pageNo: Int,
+        @Query("language") language: String
+    ): Deferred<Response<NowPlayingResponse>>
+
 }
