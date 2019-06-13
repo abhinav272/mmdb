@@ -16,7 +16,7 @@ class HomeItemsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         Glide.with(iv_movie_poster).load(
             CacheManager.configurations?.images?.baseUrl
-                    + CacheManager.configurations?.images?.backdropSizes?.get(1) + nowPlayingItem.backdropPath
+                    + CacheManager.configurations?.images?.posterSizes?.last() + nowPlayingItem.posterPath
         )
             .centerCrop().into(iv_movie_poster)
     }

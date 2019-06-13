@@ -52,11 +52,11 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun bindTrendingAdapter() {
-        gridLayoutManager = GridLayoutManager(rv_items.context, 2)
+        gridLayoutManager = GridLayoutManager(rv_items.context, 3)
         gridLayoutManager.apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int = when (homeItemsAdapter.getItemViewType(position)) {
-                    homeItemsAdapter.TRENDING_ITEMS -> 2
+                    homeItemsAdapter.TRENDING_ITEMS -> 3
                     else -> 1
                 }
             }
@@ -65,7 +65,7 @@ class HomeFragment : BaseFragment() {
         rv_items.apply {
             adapter = homeItemsAdapter
             layoutManager = gridLayoutManager
-            addItemDecoration(ItemOffsetDecoration(20))
+            addItemDecoration(ItemOffsetDecoration(10))
         }
     }
 
