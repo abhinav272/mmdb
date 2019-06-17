@@ -19,6 +19,7 @@ class HomeViewModel : BaseViewModel() {
     private val repo = HomeRepository()
     var trendingLiveData = MutableLiveData<List<TrendingItem>>()
     var nowPlayingLiveData = MutableLiveData<List<NowPlaying>>()
+    var homeTitleLiveData = MutableLiveData<Event<String>>()
 
     /**
      * This is the job for all coroutines started by this ViewModel.
@@ -39,6 +40,10 @@ class HomeViewModel : BaseViewModel() {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun updateTitle(title: String){
+        homeTitleLiveData.value = Event(title)
     }
 
     fun fetchConfigurations() {

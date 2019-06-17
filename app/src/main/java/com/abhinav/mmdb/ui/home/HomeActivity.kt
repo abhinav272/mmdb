@@ -17,7 +17,15 @@ class HomeActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         initViewModel()
+        initViewModelListener()
         showHomeFragment()
+    }
+
+    private fun initViewModelListener() {
+        viewModel.homeTitleLiveData.observe(this, Observer {
+            if (it != null && !it.isAlreadyHandled)
+                title = it.getContent()
+        })
     }
 
     private fun initViewModel() {
