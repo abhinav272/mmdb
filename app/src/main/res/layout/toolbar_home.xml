@@ -5,4 +5,5 @@
     android:layout_height="?attr/actionBarSize"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
+    app:titleTextColor="@color/color_primary_text"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
