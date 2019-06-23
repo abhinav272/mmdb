@@ -1,6 +1,5 @@
 package com.abhinav.mmdb.ui.home
 
-//import com.abhinav.mmdb.ui.adapters.TrendingItemsAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment() {
 
     private lateinit var trendingItemsAdapter: TrendingItemsAdapter
-    private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var nowPlayingItemsAdapter: NowPlayingItemsAdapter
     private val viewModel by activityViewModels<HomeViewModel>()
 

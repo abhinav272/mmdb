@@ -1,9 +1,6 @@
 package com.abhinav.mmdb.ui.adapters.viewholders
 
-import android.graphics.PorterDuff
 import android.view.View
-import androidx.core.content.ContextCompat
-import com.abhinav.mmdb.R
 import com.abhinav.mmdb.data.model.NowPlaying
 import kotlinx.android.synthetic.main.layout_now_playing_view_more.view.*
 
