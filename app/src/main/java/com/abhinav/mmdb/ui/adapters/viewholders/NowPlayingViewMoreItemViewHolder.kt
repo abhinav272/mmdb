@@ -12,7 +12,7 @@ class NowPlayingViewMoreItemViewHolder(itemView: View) : NowPlayingItemViewHolde
         super.bind(item)
         with(itemView) {
             tv_view_more.visibility = View.VISIBLE
-            iv_movie_poster.setColorFilter(ContextCompat.getColor(context, R.color.black_60_alpha), PorterDuff.Mode.SRC_OVER)
+//            iv_movie_poster.setColorFilter(ContextCompat.getColor(context, R.color.black_60_alpha), PorterDuff.Mode.SRC_OVER)
         }
     }
 }

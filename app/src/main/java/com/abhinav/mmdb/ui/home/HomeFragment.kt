@@ -91,10 +91,9 @@ class HomeFragment : BaseFragment() {
 
     private fun bindNowPlayingAdapter() {
         rv_now_playing_items.apply {
-            layoutManager = GridLayoutManager(rv_now_playing_items.context, 3)
+            layoutManager = GridLayoutManager(rv_now_playing_items.context, 2)
             adapter = nowPlayingItemsAdapter
             addItemDecoration(ItemOffsetDecoration(10))
         }
     }
-
 }

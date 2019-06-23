@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_round_corner"
     tools:background="@color/colorPrimary">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_movie_poster"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="270dp"
+        android:background="@drawable/bg_round_corner"
         app:layout_constraintDimensionRatio="W, 50:75"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +48,8 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:text="@string/txt_view_more"
+        android:background="@drawable/bg_round_corner"
+        android:backgroundTint="@color/black_60_alpha"
         android:textColor="@color/color_secondary_text"
         app:layout_constraintBottom_toBottomOf="@id/iv_movie_poster"
         app:layout_constraintEnd_toEndOf="@id/iv_movie_poster"

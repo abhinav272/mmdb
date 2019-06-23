@@ -1,6 +1,5 @@
 package com.abhinav.mmdb.ui.adapters
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.abhinav.mmdb.R
@@ -25,13 +24,11 @@ class NowPlayingItemsAdapter : RecyclerView.Adapter<NowPlayingItemViewHolder>() 
         }
 
     private fun createViewMoreItemViewHolder(parent: ViewGroup): NowPlayingViewMoreItemViewHolder {
-        Log.e("test", "createViewMoreItemViewHolder")
         val itemView = parent.inflate(R.layout.layout_now_playing_view_more)
         return NowPlayingViewMoreItemViewHolder(itemView)
     }
 
     private fun createNowPlayingItemViewHolder(parent: ViewGroup): NowPlayingItemViewHolder {
-        Log.e("test", "createNowPlayingItemViewHolder")
         val itemView = parent.inflate(R.layout.layout_now_playing)
         return NowPlayingItemViewHolder(itemView)
     }
