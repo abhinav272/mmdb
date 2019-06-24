@@ -8,7 +8,7 @@ import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.adapters.viewholders.NowPlayingItemViewHolder
 import com.abhinav.mmdb.ui.adapters.viewholders.NowPlayingViewMoreItemViewHolder
 
-class NowPlayingItemsAdapter : RecyclerView.Adapter<NowPlayingItemViewHolder>() {
+class NowPlayingItemsAdapter(var onNowPlayingItemClick: (NowPlaying, Int) -> Unit) : RecyclerView.Adapter<NowPlayingItemViewHolder>() {
 
     companion object {
         private const val ITEM = 101
@@ -41,7 +41,7 @@ class NowPlayingItemsAdapter : RecyclerView.Adapter<NowPlayingItemViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: NowPlayingItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onNowPlayingItemClick)
     }
 
     private fun getItem(position: Int): NowPlaying =
@@ -58,5 +58,9 @@ class NowPlayingItemsAdapter : RecyclerView.Adapter<NowPlayingItemViewHolder>() 
             addAll(list)
         }
         notifyDataSetChanged()
+    }
+
+    fun setListener(onNowPlayingItemClick: (NowPlaying, Int) -> Unit) {
+
     }
 }

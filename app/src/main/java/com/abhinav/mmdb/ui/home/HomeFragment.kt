@@ -1,6 +1,7 @@
 package com.abhinav.mmdb.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abhinav.mmdb.R
+import com.abhinav.mmdb.data.model.NowPlaying
 import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.BaseFragment
 import com.abhinav.mmdb.ui.adapters.NowPlayingItemsAdapter
@@ -30,11 +32,19 @@ class HomeFragment : BaseFragment() {
         fun getInstance() = HomeFragment()
     }
 
+    val onNowPlayingItemClick: (NowPlaying, Int) -> Unit = { nowPlaying, _ ->
+        Log.e("click", nowPlaying.originalTitle)
+    }
+
+    val onUpcomingItemClick: (NowPlaying, Int) -> Unit = { upcoming, _ ->
+        Log.e("upcoming clicked", upcoming.originalTitle)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         trendingItemsAdapter = TrendingItemsAdapter()
-        nowPlayingItemsAdapter = NowPlayingItemsAdapter()
-        upcomingItemsAdapter = UpcomingItemsAdapter()
+        nowPlayingItemsAdapter = NowPlayingItemsAdapter(onNowPlayingItemClick)
+        upcomingItemsAdapter = UpcomingItemsAdapter(onUpcomingItemClick)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

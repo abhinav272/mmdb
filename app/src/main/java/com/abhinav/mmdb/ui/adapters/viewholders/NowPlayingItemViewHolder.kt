@@ -10,9 +10,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.layout_now_playing.view.*
 
-open class NowPlayingItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    open fun bind(item: NowPlaying) {
+open class NowPlayingItemViewHolder(
+    itemView: View
+) : RecyclerView.ViewHolder(itemView) {
+    open fun bind(
+        item: NowPlaying,
+        onNowPlayingItemClick: (NowPlaying, Int) -> Unit
+    ) {
         with(itemView) {
+            setOnClickListener {
+                onNowPlayingItemClick(item, adapterPosition)
+            }
             tv_movie_name.text = item.originalTitle
             tv_movie_rating.text = String.format("Rating: %.1f", item.voteAverage)
             iv_movie_poster.apply {
