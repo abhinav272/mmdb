@@ -3,4 +3,5 @@
     <string name="txt_trending_movies">Trending Now</string>
     <string name="txt_now_playing">Now Playing</string>
     <string name="txt_view_more">View More..</string>
+    <string name="txt_upcoming">Upcoming</string>
 </resources>

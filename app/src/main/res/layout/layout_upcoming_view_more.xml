@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_movie_poster"
         android:layout_width="0dp"
-        android:layout_height="270dp"
+        android:layout_height="170dp"
         android:background="@drawable/bg_round_corner"
         app:layout_constraintDimensionRatio="W, 50:75"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,12 +20,11 @@
         android:id="@+id/tv_movie_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:fontFamily="@font/montserrat"
         android:maxLines="2"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/montserrat"
         android:textColor="@color/color_primary_text"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/iv_movie_poster"
         app:layout_constraintTop_toBottomOf="@id/iv_movie_poster"
@@ -37,9 +36,24 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/color_primary_text"
-        android:textSize="10sp"
+        android:textSize="8sp"
         app:layout_constraintStart_toStartOf="@id/tv_movie_name"
         app:layout_constraintTop_toBottomOf="@id/tv_movie_name"
         tools:text="Rating: 9.7" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_view_more"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_round_corner"
+        android:backgroundTint="@color/black_60_alpha"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="@string/txt_view_more"
+        android:textColor="@color/color_primary_text"
+        app:layout_constraintBottom_toBottomOf="@id/iv_movie_poster"
+        app:layout_constraintEnd_toEndOf="@id/iv_movie_poster"
+        app:layout_constraintStart_toStartOf="@id/iv_movie_poster"
+        app:layout_constraintTop_toTopOf="@id/iv_movie_poster" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
