@@ -28,8 +28,15 @@ class HomeRepository : BaseRepository() {
 
     suspend fun getNowPlayingMovies(): Result<NowPlayingResponse> {
         return safeApiCall(
-            {ApiInterface.getAPIService().getNowPlayingMovies(pageNo = 1, language = "en").await()},
+            { ApiInterface.getAPIService().getNowPlayingMovies(pageNo = 1, language = "en").await() },
             "Unable to fetch Now Playing movies"
+        )
+    }
+
+    suspend fun getUpcomingMovies(): Result<NowPlayingResponse> {
+        return safeApiCall(
+            { ApiInterface.getAPIService().getUpcomingMovies(pageNo = 1, language = "en").await() },
+            "Unable to fetch Upcoming Movies"
         )
     }
 }

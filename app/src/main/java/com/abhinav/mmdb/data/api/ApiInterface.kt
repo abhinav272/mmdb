@@ -80,4 +80,10 @@ interface ApiInterface {
         @Query("language") language: String
     ): Deferred<Response<NowPlayingResponse>>
 
+    @GET("movie/upcoming")
+    fun getUpcomingMovies(
+        @Query("page") pageNo: Int,
+        @Query("language") language: String
+    ): Deferred<Response<NowPlayingResponse>>
+
 }

@@ -15,11 +15,12 @@ import kotlinx.coroutines.launch
 class HomeViewModel : BaseViewModel() {
 
     private val TAG = "HomeViewModel"
-
     private val repo = HomeRepository()
+
     var trendingLiveData = MutableLiveData<List<TrendingItem>>()
     var nowPlayingLiveData = MutableLiveData<List<NowPlaying>>()
     var homeTitleLiveData = MutableLiveData<Event<String>>()
+    var upcomingLiveData = MutableLiveData<List<NowPlaying>>()
 
     /**
      * This is the job for all coroutines started by this ViewModel.
@@ -42,7 +43,7 @@ class HomeViewModel : BaseViewModel() {
         viewModelJob.cancel()
     }
 
-    fun updateTitle(title: String){
+    fun updateTitle(title: String) {
         homeTitleLiveData.value = Event(title)
     }
 
@@ -115,6 +116,26 @@ class HomeViewModel : BaseViewModel() {
                 else -> {
                     nowPlayingResult as Result.Error
                     nowPlayingResult.exception.message?.let { Log.e(TAG, it, nowPlayingResult.exception) }
+                }
+            }
+        }
+    }
+
+    fun fetchUpcoming() {
+        ioScope.launch {
+            when (val upcomingResult = repo.getUpcomingMovies()) {
+                is Result.Success -> {
+                    upcomingLiveData.postValue(upcomingResult.data.results)
+                }
+
+                is Result.Failure -> {
+                    failureLiveData.postValue(Event(upcomingResult))
+                    Log.e(TAG, upcomingResult.message)
+                }
+
+                else -> {
+                    upcomingResult as Result.Error
+                    upcomingResult.exception.message?.let { Log.e(TAG, it, upcomingResult.exception) }
                 }
             }
         }

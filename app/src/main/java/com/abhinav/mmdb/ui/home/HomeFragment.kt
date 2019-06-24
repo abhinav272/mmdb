@@ -14,12 +14,14 @@ import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.BaseFragment
 import com.abhinav.mmdb.ui.adapters.NowPlayingItemsAdapter
 import com.abhinav.mmdb.ui.adapters.TrendingItemsAdapter
+import com.abhinav.mmdb.ui.adapters.UpcomingItemsAdapter
 import com.abhinav.mmdb.utils.ItemOffsetDecoration
 import com.abhinav.mmdb.utils.StartSnapHelper
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment() {
 
+    private lateinit var upcomingItemsAdapter: UpcomingItemsAdapter
     private lateinit var trendingItemsAdapter: TrendingItemsAdapter
     private lateinit var nowPlayingItemsAdapter: NowPlayingItemsAdapter
     private val viewModel by activityViewModels<HomeViewModel>()
@@ -32,6 +34,7 @@ class HomeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         trendingItemsAdapter = TrendingItemsAdapter()
         nowPlayingItemsAdapter = NowPlayingItemsAdapter()
+        upcomingItemsAdapter = UpcomingItemsAdapter()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,19 +46,25 @@ class HomeFragment : BaseFragment() {
 
         bindTrendingAdapter()
         bindNowPlayingAdapter()
+        bindUpcomingAdapter()
 
         viewModel.updateTitle(getString(R.string.app_name))
 
-        viewModel.trendingLiveData.observe(this, Observer {
+        viewModel.trendingLiveData.observe(viewLifecycleOwner, Observer {
             trendingItemsAdapter.updateItems(it)
         })
 
-        viewModel.nowPlayingLiveData.observe(this, Observer {
+        viewModel.nowPlayingLiveData.observe(viewLifecycleOwner, Observer {
             nowPlayingItemsAdapter.updateItems(it)
+        })
+
+        viewModel.upcomingLiveData.observe(viewLifecycleOwner, Observer {
+            upcomingItemsAdapter.updateItems(it)
         })
 
         viewModel.fetchTrendingItems()
         viewModel.fetchNowPlaying()
+        viewModel.fetchUpcoming()
     }
 
 //    private fun bindTrendingAdapter() {
@@ -91,6 +100,14 @@ class HomeFragment : BaseFragment() {
         rv_now_playing_items.apply {
             layoutManager = GridLayoutManager(rv_now_playing_items.context, 2)
             adapter = nowPlayingItemsAdapter
+            addItemDecoration(ItemOffsetDecoration(10))
+        }
+    }
+
+    private fun bindUpcomingAdapter() {
+        rv_upcoming_items.apply {
+            layoutManager = GridLayoutManager(rv_upcoming_items.context, 3)
+            adapter = upcomingItemsAdapter
             addItemDecoration(ItemOffsetDecoration(10))
         }
     }
