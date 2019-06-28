@@ -1,6 +1,8 @@
 package com.abhinav.mmdb.ui.home
 
+import android.content.Context
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,23 +22,34 @@ import com.abhinav.mmdb.ui.adapters.UpcomingItemsAdapter
 import com.abhinav.mmdb.utils.ItemOffsetDecoration
 import com.abhinav.mmdb.utils.StartSnapHelper
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.lang.IllegalStateException
 
 class HomeFragment : BaseFragment() {
 
     private lateinit var upcomingItemsAdapter: UpcomingItemsAdapter
     private lateinit var trendingItemsAdapter: TrendingItemsAdapter
     private lateinit var nowPlayingItemsAdapter: NowPlayingItemsAdapter
+    private lateinit var mHost: HomeFragmentHost
     private val viewModel by activityViewModels<HomeViewModel>()
 
     companion object {
         fun getInstance() = HomeFragment()
     }
 
-    val onNowPlayingItemClick: (NowPlaying, Int) -> Unit = { nowPlaying, _ ->
-        Log.e("click", nowPlaying.originalTitle)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        when(context){
+            is HomeFragmentHost -> mHost = context
+            else -> throw IllegalStateException("Host must implement HomeFragmentHost")
+        }
     }
 
-    val onUpcomingItemClick: (NowPlaying, Int) -> Unit = { upcoming, _ ->
+    val onNowPlayingItemClick: (NowPlaying, Int, View) -> Unit = { nowPlaying, position, imageView ->
+        mHost.onNowPlayingSelected(nowPlaying, position, imageView, nowPlayingItemsAdapter.sharedViewList)
+    }
+
+    val onUpcomingItemClick: (NowPlaying, Int, View) -> Unit = { upcoming, _, _ ->
         Log.e("upcoming clicked", upcoming.originalTitle)
     }
 
@@ -45,6 +58,10 @@ class HomeFragment : BaseFragment() {
         trendingItemsAdapter = TrendingItemsAdapter()
         nowPlayingItemsAdapter = NowPlayingItemsAdapter(onNowPlayingItemClick)
         upcomingItemsAdapter = UpcomingItemsAdapter(onUpcomingItemClick)
+
+        viewModel.fetchTrendingItems()
+        viewModel.fetchNowPlaying()
+        viewModel.fetchUpcoming()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -72,9 +89,6 @@ class HomeFragment : BaseFragment() {
             upcomingItemsAdapter.updateItems(it)
         })
 
-        viewModel.fetchTrendingItems()
-        viewModel.fetchNowPlaying()
-        viewModel.fetchUpcoming()
     }
 
 //    private fun bindTrendingAdapter() {
@@ -120,5 +134,14 @@ class HomeFragment : BaseFragment() {
             adapter = upcomingItemsAdapter
             addItemDecoration(ItemOffsetDecoration(10))
         }
+    }
+
+    public interface HomeFragmentHost{
+        fun onNowPlayingSelected(
+            nowPlaying: NowPlaying,
+            position: Int,
+            view: View,
+            sharedViewList: ArrayList<View>
+        )
     }
 }
