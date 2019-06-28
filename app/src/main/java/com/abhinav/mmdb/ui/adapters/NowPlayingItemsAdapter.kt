@@ -1,5 +1,7 @@
 package com.abhinav.mmdb.ui.adapters
 
+import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.abhinav.mmdb.R
@@ -8,13 +10,14 @@ import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.adapters.viewholders.NowPlayingItemViewHolder
 import com.abhinav.mmdb.ui.adapters.viewholders.NowPlayingViewMoreItemViewHolder
 
-class NowPlayingItemsAdapter(var onNowPlayingItemClick: (NowPlaying, Int) -> Unit) : RecyclerView.Adapter<NowPlayingItemViewHolder>() {
+class NowPlayingItemsAdapter(var onNowPlayingItemClick: (NowPlaying, Int, View) -> Unit) : RecyclerView.Adapter<NowPlayingItemViewHolder>() {
 
     companion object {
         private const val ITEM = 101
         private const val VIEW_MORE_ITEM = 102
     }
 
+    var sharedViewList = ArrayList<View>()
     private var nowPlayingItems = ArrayList<NowPlaying>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingItemViewHolder =
@@ -44,6 +47,18 @@ class NowPlayingItemsAdapter(var onNowPlayingItemClick: (NowPlaying, Int) -> Uni
         holder.bind(getItem(position), onNowPlayingItemClick)
     }
 
+    override fun onViewAttachedToWindow(holder: NowPlayingItemViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        sharedViewList.add(holder.getSharedView())
+        Log.e("Add", holder.adapterPosition.toString())
+    }
+
+    override fun onViewDetachedFromWindow(holder: NowPlayingItemViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        sharedViewList.remove(holder.getSharedView())
+        Log.e("Removed", holder.adapterPosition.toString())
+    }
+
     private fun getItem(position: Int): NowPlaying =
         nowPlayingItems[position]
 
@@ -56,11 +71,8 @@ class NowPlayingItemsAdapter(var onNowPlayingItemClick: (NowPlaying, Int) -> Uni
         nowPlayingItems.apply {
             clear()
             addAll(list)
+            sharedViewList.clear()
         }
         notifyDataSetChanged()
-    }
-
-    fun setListener(onNowPlayingItemClick: (NowPlaying, Int) -> Unit) {
-
     }
 }

@@ -1,5 +1,6 @@
 package com.abhinav.mmdb.ui.adapters
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.abhinav.mmdb.R
@@ -8,7 +9,7 @@ import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.adapters.viewholders.NowPlayingItemViewHolder
 import com.abhinav.mmdb.ui.adapters.viewholders.NowPlayingViewMoreItemViewHolder
 
-class UpcomingItemsAdapter(var onUpcomingItemClick: (NowPlaying, Int) -> Unit) : RecyclerView.Adapter<NowPlayingItemViewHolder>() {
+class UpcomingItemsAdapter(var onUpcomingItemClick: (NowPlaying, Int, View) -> Unit) : RecyclerView.Adapter<NowPlayingItemViewHolder>() {
 
     companion object {
         private const val ITEM = 101

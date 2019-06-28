@@ -9,13 +9,10 @@ class NowPlayingViewMoreItemViewHolder(
 ) : NowPlayingItemViewHolder(itemView) {
     override fun bind(
         item: NowPlaying,
-        onNowPlayingItemClick: (NowPlaying, Int) -> Unit
+        onNowPlayingItemClick: (NowPlaying, Int, View) -> Unit
     ) {
         super.bind(item, onNowPlayingItemClick)
         with(itemView) {
-            setOnClickListener {
-                onNowPlayingItemClick(item, adapterPosition)
-            }
             tv_view_more.visibility = View.VISIBLE
 //            iv_movie_poster.setColorFilter(ContextCompat.getColor(context, R.color.black_60_alpha), PorterDuff.Mode.SRC_OVER)
         }
