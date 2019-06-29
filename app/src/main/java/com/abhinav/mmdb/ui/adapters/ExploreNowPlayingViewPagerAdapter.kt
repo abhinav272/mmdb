@@ -65,8 +65,6 @@ class ExploreNowPlayingViewPagerAdapter(var fragment: BaseFragment, var nowPlayi
                         }
 
                     })
-                    .thumbnail(Glide.with(this).load(BuildConfig.IMAGE_BASE_URL
-                            + CacheManager.configurations?.images?.posterSizes?.first() + item.posterPath).apply(requestOptions))
                     .apply(requestOptions)
                     .into(this)
             }
