@@ -1,28 +1,24 @@
 package com.abhinav.mmdb.ui.home
 
-import android.animation.LayoutTransition
 import android.os.Bundle
-import android.transition.Fade
-import android.transition.Transition
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import androidx.core.os.bundleOf
-import androidx.core.view.doOnPreDraw
 import androidx.core.view.postDelayed
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager
 import com.abhinav.mmdb.R
 import com.abhinav.mmdb.data.cache.CacheManager
 import com.abhinav.mmdb.data.model.NowPlaying
+import com.abhinav.mmdb.formatDate
 import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.BaseFragment
 import com.abhinav.mmdb.ui.adapters.ExploreNowPlayingViewPagerAdapter
 import com.abhinav.mmdb.utils.transformer.DepthTransformation
 import kotlinx.android.synthetic.main.fragment_explore_now_playing.*
-import kotlinx.android.synthetic.main.layout_trending_item.view.*
 
 class ExploreNowPlayingFragment : BaseFragment() {
 
@@ -48,7 +44,8 @@ class ExploreNowPlayingFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         list = viewModel.nowPlayingLiveData.value!!
         postponeEnterTransition()
-        sharedElementReturnTransition = TransitionInflater.from(context).inflateTransition(R.transition.default_transition)
+        sharedElementReturnTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.default_transition)
         sharedElementEnterTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.default_transition)
         viewPagerAdapter = ExploreNowPlayingViewPagerAdapter(this, list)
@@ -65,7 +62,7 @@ class ExploreNowPlayingFragment : BaseFragment() {
             adapter = viewPagerAdapter
             setPageTransformer(true, DepthTransformation())
             currentItem = arguments?.get(POSITION) as Int
-            postDelayed(450){
+            postDelayed(450) {
                 updateMovieDetails(currentItem)
             }
         }
@@ -98,7 +95,7 @@ class ExploreNowPlayingFragment : BaseFragment() {
             alpha = 0f
             translationY = 70f
             animate()
-                .setInterpolator(OvershootInterpolator())
+                .setInterpolator(OvershootInterpolator(3f))
                 .translationY(0f)
                 .alpha(1f)
                 .duration = 450
@@ -109,11 +106,13 @@ class ExploreNowPlayingFragment : BaseFragment() {
         tv_movie_rating.text = String.format("Rating: %.1f", list[position].voteAverage)
         tv_movie_genre.text = ""
         var textGen = ""
-        list[position].genreIds?.take(3)?.forEach {
-            val genre = String.format("%s|", CacheManager.genreMap?.get(it))
+        list[position].genreIds?.forEach {
+            val genre = String.format("%s, ", CacheManager.genreMap?.get(it))
             textGen = String.format("%s%s", textGen, genre)
         }
-        tv_movie_genre.text = textGen.dropLast(1)
+        tv_movie_genre.text = textGen.dropLast(2)
+        tv_movie_release_date.text = String.format("Release Date: %s", list[position].releaseDate.formatDate())
+        tv_movie_overview.text = String.format("Overview: %s", list[position].overview)
     }
 
 }
