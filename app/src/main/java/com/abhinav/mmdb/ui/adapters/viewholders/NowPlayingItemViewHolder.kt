@@ -30,7 +30,7 @@ open class NowPlayingItemViewHolder(
                 transitionName = item.id.toString().plus(adapterPosition)
                 var requestOptions = RequestOptions()
                 requestOptions = requestOptions
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .transforms(CenterCrop(), RoundedCorners(25))
                 Glide.with(this).load(
                     BuildConfig.IMAGE_BASE_URL

@@ -36,7 +36,7 @@ class ExploreNowPlayingViewPagerAdapter(var fragment: BaseFragment, var nowPlayi
                 Log.e("Setting", "$transitionName for ${item.originalTitle}")
                 var requestOptions = RequestOptions()
                 requestOptions = requestOptions
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .transforms(CenterCrop(), RoundedCorners(25))
                 Glide.with(this).load(
                     BuildConfig.IMAGE_BASE_URL

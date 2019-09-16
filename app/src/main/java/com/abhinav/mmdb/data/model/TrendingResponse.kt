@@ -1,6 +1,8 @@
 package com.abhinav.mmdb.data.model
 
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class TrendingItem(
@@ -44,7 +46,63 @@ data class TrendingItem(
     val adult: Boolean = false,
     @SerializedName("vote_count")
     val voteCount: Int = 0
-)
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readInt(),
+        source.readString(),
+        source.createTypedArrayList(TrendingItem.CREATOR),
+        source.readDouble(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        1 == source.readInt(),
+        source.readString(),
+        ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readDouble(),
+        source.readInt(),
+        1 == source.readInt(),
+        source.readInt()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeInt(gender)
+        writeString(knownForDepartment)
+        writeTypedList(knownFor)
+        writeDouble(popularity)
+        writeString(name)
+        writeString(profilePath)
+        writeString(overview)
+        writeString(originalLanguage)
+        writeString(originalTitle)
+        writeInt((if (video) 1 else 0))
+        writeString(title)
+        writeList(genreIds)
+        writeString(posterPath)
+        writeString(backdropPath)
+        writeString(releaseDate)
+        writeString(mediaType)
+        writeDouble(voteAverage)
+        writeInt(id)
+        writeInt((if (adult) 1 else 0))
+        writeInt(voteCount)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<TrendingItem> = object : Parcelable.Creator<TrendingItem> {
+            override fun createFromParcel(source: Parcel): TrendingItem = TrendingItem(source)
+            override fun newArray(size: Int): Array<TrendingItem?> = arrayOfNulls(size)
+        }
+    }
+}
 
 data class TrendingResponse(
     @SerializedName("page")

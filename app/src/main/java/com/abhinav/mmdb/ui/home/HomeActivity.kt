@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.abhinav.mmdb.R
 import com.abhinav.mmdb.data.model.NowPlaying
+import com.abhinav.mmdb.data.model.TrendingItem
 import com.abhinav.mmdb.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -42,6 +43,26 @@ class HomeActivity : BaseActivity(), HomeFragment.HomeFragmentHost {
         showExploreNowPlayingFragment(nowPlaying, position, view, sharedViewList)
     }
 
+    override fun onTrendingItemSelected(trendingItem: TrendingItem, position: Int, view: View) {
+        showTrendingDetailsFragment(trendingItem, view)
+    }
+
+    private fun showTrendingDetailsFragment(trendingItem: TrendingItem, view: View) {
+        val fragment = TrendingDetailFragment.getInstance(trendingItem)
+        supportFragmentManager.apply {
+            findFragmentByTag(HomeFragment::class.java.simpleName)?.let {
+                it.sharedElementReturnTransition =
+                    TransitionInflater.from(it.context).inflateTransition(R.transition.default_transition)
+                it.exitTransition =
+                    TransitionInflater.from(it.context).inflateTransition(android.R.transition.no_transition)
+            }
+        }.commit {
+            addSharedElement(view, view.transitionName)
+            replace(frame_container.id, fragment, fragment::class.java.simpleName)
+            addToBackStack(fragment::class.java.simpleName)
+        }
+    }
+
     private fun showExploreNowPlayingFragment(
         nowPlaying: NowPlaying,
         position: Int,
@@ -51,8 +72,10 @@ class HomeActivity : BaseActivity(), HomeFragment.HomeFragmentHost {
         val fragment = ExploreNowPlayingFragment.getInstance(nowPlaying, position)
         supportFragmentManager.apply {
             findFragmentByTag(HomeFragment::class.java.simpleName)?.let {
-                it.sharedElementReturnTransition = TransitionInflater.from(it.context).inflateTransition(R.transition.default_transition)
-                it.exitTransition = TransitionInflater.from(it.context).inflateTransition(android.R.transition.no_transition)
+                it.sharedElementReturnTransition =
+                    TransitionInflater.from(it.context).inflateTransition(R.transition.default_transition)
+                it.exitTransition =
+                    TransitionInflater.from(it.context).inflateTransition(android.R.transition.no_transition)
             }
         }.commit {
             sharedViewList.forEach {

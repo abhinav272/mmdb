@@ -2,7 +2,6 @@ package com.abhinav.mmdb.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abhinav.mmdb.R
 import com.abhinav.mmdb.data.model.NowPlaying
+import com.abhinav.mmdb.data.model.TrendingItem
 import com.abhinav.mmdb.inflate
 import com.abhinav.mmdb.ui.BaseFragment
 import com.abhinav.mmdb.ui.adapters.NowPlayingItemsAdapter
@@ -22,7 +22,6 @@ import com.abhinav.mmdb.ui.adapters.UpcomingItemsAdapter
 import com.abhinav.mmdb.utils.ItemOffsetDecoration
 import com.abhinav.mmdb.utils.StartSnapHelper
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.lang.IllegalStateException
 
 class HomeFragment : BaseFragment() {
 
@@ -39,10 +38,14 @@ class HomeFragment : BaseFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        when(context){
+        when (context) {
             is HomeFragmentHost -> mHost = context
             else -> throw IllegalStateException("Host must implement HomeFragmentHost")
         }
+    }
+
+    val onTrendingItemClick: (TrendingItem, Int, View) -> Unit = { trendingItem, position, view ->
+        mHost.onTrendingItemSelected(trendingItem, position, view)
     }
 
     val onNowPlayingItemClick: (NowPlaying, Int, View) -> Unit = { nowPlaying, position, imageView ->
@@ -55,7 +58,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        trendingItemsAdapter = TrendingItemsAdapter()
+        trendingItemsAdapter = TrendingItemsAdapter(onTrendingItemClick)
         nowPlayingItemsAdapter = NowPlayingItemsAdapter(onNowPlayingItemClick)
         upcomingItemsAdapter = UpcomingItemsAdapter(onUpcomingItemClick)
 
@@ -136,12 +139,18 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    public interface HomeFragmentHost{
+    interface HomeFragmentHost {
         fun onNowPlayingSelected(
             nowPlaying: NowPlaying,
             position: Int,
             view: View,
             sharedViewList: ArrayList<View>
+        )
+
+        fun onTrendingItemSelected(
+            trendingItem: TrendingItem,
+            position: Int,
+            view: View
         )
     }
 }

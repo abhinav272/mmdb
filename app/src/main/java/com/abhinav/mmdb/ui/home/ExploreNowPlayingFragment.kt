@@ -101,7 +101,6 @@ class ExploreNowPlayingFragment : BaseFragment() {
                 .duration = 450
         }
 
-
         tv_movie_name.text = list[position].originalTitle
         tv_movie_rating.text = String.format("Rating: %.1f", list[position].voteAverage)
         tv_movie_genre.text = ""
